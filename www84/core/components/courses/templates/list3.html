@@ -1,0 +1,20 @@
+<ion-view view-title="My Programs">
+   
+    <ion-content padding="true" mm-state-class>
+        
+<div ng-if="programsname.length > 0"> 
+<div class="card" ng-repeat="values in programsname track by $index;">
+    <a class="item item-text-wrap item-icon-right item-borderless item-course" ng-class="{'item-progress': roundProgress}" ui-sref="site.mm_program({courseid: values.Programid})" title="{{course.fullname}}">
+      <h2 style="color:blue;text-decoration:underline;"><mm-format-text watch="true"> {{values.ProgramName}</mm-format-text></h2>
+       
+    </a>
+</div> 
+
+</div>
+<div ng-if="programsname.length <= 0">
+    <span>You have no cources in My Programs</span>
+
+</div>
+
+</ion-content>
+</ion-view>

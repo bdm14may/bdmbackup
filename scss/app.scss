@@ -29,10 +29,10 @@ $red:             #cb3d4d;
 $red-light:       mix($red, white, 20%);
 $red-dark:        darken($red, 10%);
 
-$orange:          #f98012; // Accent (never text).
+$orange:          #0071ce; // Accent (never text).
 $orange-light:    lighten($orange, 10%);
 
-$yellow:          #fbad1a; // Accent (never text).
+$yellow:          #0071ce; // Accent (never text).
 $yellow-light:    mix($yellow, white, 20%);
 $yellow-dark:     mix($yellow, black, 40%);
 
@@ -50,8 +50,8 @@ $mm-color:          $orange;
 $mm-color-light:    lighten($mm-color, 10%);
 $mm-color-dark:     darken($mm-color, 10%);
 
-$mm-color-init-screen:          #ff5c00;
-$mm-color-init-screen-alt:      #ff7600;
+$mm-color-init-screen:          #0071ce;
+$mm-color-init-screen-alt:      #0071ce;
 $mm-init-screen-spinner-color:  $white;
 $mm-init-screen-logo-width:     60%;
 $mm-init-screen-logo-max-width: 300px;

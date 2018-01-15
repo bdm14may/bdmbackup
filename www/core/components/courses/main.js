@@ -40,6 +40,19 @@ angular.module('mm.core.courses', ['mm.core.contentlinks', 'mm.core.sidemenu'])
         }
     })
 
+    .state('site.mm_program', {
+        url: '/mm_program',
+        params: {
+            courseid: null
+        },
+        views: {
+            'site': {
+                templateUrl: 'core/components/courses/templates/list1.html',
+                controller: 'mmCoursesListCtrl1'
+            }
+        }
+    })
+
     .state('site.mm_searchcourses', {
         url: '/mm_searchcourses',
         views: {
