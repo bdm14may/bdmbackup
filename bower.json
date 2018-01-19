@@ -23,5 +23,6 @@
     "angular": "1.5.3"
   },
   "dependencies": {
+    "angular-pdfjs-viewer": "^0.8.1"
   }
 }

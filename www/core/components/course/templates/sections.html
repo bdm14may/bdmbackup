@@ -28,8 +28,37 @@
                             <p class="badge badge-calm badge-inline" ng-if="section.availabilityinfo"><mm-format-text watch="true">{{ section.availabilityinfo }}</mm-format-text></p>
                         </a>
                     </li>
+                    <li>
+                        <a class="item item-text-wrap" ng-click="OpenLeaderBoard();">
+                            <mm-format-text >LeaderBoard</mm-format-text>
+                        </a>
+                    </li>
                 </ul>
             </mm-loading>
         </ion-content>
     </mm-split-view>
+    <script id = "LeaderBoard.html" type = "text/ng-template">
+        <ion-modal-view>
+           <ion-header-bar>
+              <h1 class = "title">LeaderBoard</h1>
+           </ion-header-bar>
+             
+           <ion-content>
+                <div class = "card" ng-if="coursele.fullname">
+                        <div class = "item item-text-wrap">
+                             User name : {{coursele.fullname}}
+                        </br>
+                            Score :{{coursele.score}}
+                        </div>
+                     </div>
+                     <div class = "card" ng-if="!coursele.fullname">
+                         No data Found.
+                     </div>
+              <button class = "button icon icon-left ion-ios-close-outline"
+                 ng-click ="CloseLeaderBoard()">Close</button>
+
+
+           </ion-content>
+        </ion-modal-view>
+     </script>
 </ion-view>

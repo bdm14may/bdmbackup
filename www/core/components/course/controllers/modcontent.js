@@ -23,13 +23,40 @@ angular.module('mm.core.course')
  * @ngdoc controller
  * @name mmCourseModContentCtrl
  */
-.controller('mmCourseModContentCtrl', function($log, $stateParams, $scope, $mmCourseDelegate, $mmCourse, $translate, $mmText,$sce,$cordovaInAppBrowser,$rootScope,$ionicNavBarDelegate,$mmSite,$http) {
+.controller('mmCourseModContentCtrl', function($log, $stateParams, $scope, $mmCourseDelegate, $mmCourse, $translate, $mmText,$sce,$cordovaInAppBrowser,$rootScope,$ionicNavBarDelegate,$mmSite,$http,$PDFfactory,$cordovaFileOpener2) {
     $log = $log.getInstance('mmCourseModContentCtrl');
     var module = $stateParams.module || {};
     console.log(module,"module");
     $scope.moduleer=module;
+    $scope.showpdf=false;
     $scope.siteinfo = $mmSite.getInfo();
     console.log( $scope.siteinfo," $scope.siteinfo");
+    if(module.completionstatus.modname=="certificate"){
+        $PDFfactory.getCertificate(module.instance).then(function(res){
+            console.log(res,"res");
+            
+ var currentDate = new Date(res.data.issue.timecreated*1000);
+
+var date = currentDate.getDate();
+var month = currentDate.getMonth(); //Be careful! January is 0 not 1
+var year = currentDate.getFullYear();
+
+$scope.dateString = date + "-" +(month + 1) + "-" + year;
+           $scope.pdfURL=res.data.issue.fileurl+"?token="+localStorage.getItem('token');
+
+          
+        //    $cordovaFileOpener2.open(
+        //     $scope.pdfURL,
+        //     'application/pdf'
+        //   ).then(function() {
+        //       // file opened successfully
+        //   }, function(err) {
+        //       // An error occurred. Show a message to the user
+        //   });
+           //window.open($scope.pdfURL,"_system","location=yes,enableViewportScale=yes,hidden=no");
+
+        })
+    }
     if(module.completionstatus.modname=="feedback"){
       $http.get($scope.siteinfo.siteurl+'/webservice/rest/server.php?wstoken=' + localStorage.getItem('token') + '&wsfunction=mod_feedback_completed&feedbackid=' + module.instance + '&userid=' + $scope.siteinfo.userid + '&moodlewsrestformat=json').then(function (res) {
         
@@ -184,9 +211,47 @@ angular.module('mm.core.course')
        // alert("i am exit");
         $ionicNavBarDelegate.back();
           });
-
+$scope.openb1=function(){
+    $scope.showpdf=true;
+    // window.open($scope.pdfURL,"_system","location=yes,enableViewportScale=yes,hidden=no");
+    //PDFViewer.openPDF($scope.pdfURL);
+    var url="https://docs.google.com/viewer?url="+ encodeURIComponent($scope.pdfURL);
+    // var options = {
+    //     location: 'no',
+    //     clearcache: 'yes',
+    //     toolbar: 'yes',
+    //   };
+    // $cordovaInAppBrowser.open(url,'_blank', options)
+    // .then(function(event) {
+    //   // success
+    // })
+    // .catch(function(event) {
+    //   // error
+    // });
+    window.open(url, '_blank', 'location=no');
+}
     // Context Menu Description action.
     $scope.expandDescription = function() {
         $mmText.expandText($translate.instant('mm.core.description'), $scope.description, false);
     };
-});
+}).factory("$PDFfactory",function($http,$mmSite){
+    var siteinfo1 = $mmSite.getInfo();
+    return {
+        getCertificate:getCertificate
+    }
+    function getCertificate(cerid){
+        
+        return $http.get(siteinfo1.siteurl+"/webservice/rest/server.php?wstoken="+localStorage.getItem('token')+"&wsfunction=mod_certificate_issue_certificate&certificateid="+cerid+"&moodlewsrestformat=json").then(function (res){
+            return res;
+
+        }).catch(function(e){
+            return e;
+        })
+
+    }
+}).filter('trustAsResourceUrl', ['$sce', function($sce) {
+    return function(val) {
+        return $sce.trustAsResourceUrl(val);
+    };
+    }])
+

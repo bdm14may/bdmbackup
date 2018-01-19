@@ -23,7 +23,7 @@ angular.module('mm.core.course')
  */
 .controller('mmCourseSectionsCtrl', function($mmCourse, $mmUtil, $scope, $stateParams, $translate, $mmCourseHelper, $mmEvents,
             $mmSite, $mmCoursePrefetchDelegate, $mmCourses, $q, $ionicHistory, $ionicPlatform, mmCoreCourseAllSectionsId,
-            mmCoreEventSectionStatusChanged, $state, $timeout, $mmCoursesDelegate, $controller) {
+            mmCoreEventSectionStatusChanged, $state, $timeout, $mmCoursesDelegate, $controller,$ionicModal,$Leaderfactory) {
     var courseId = $stateParams.courseid,
         sectionId = parseInt($stateParams.sid, 10),
         sectionNumber = parseInt($stateParams.sectionnumber, 10),
@@ -37,7 +37,14 @@ angular.module('mm.core.course')
     $scope.downloadSectionsIcon = getDownloadSectionIcon();
     $scope.sectionHasContent = $mmCourseHelper.sectionHasContent;
     $scope.courseActions = [];
+    $Leaderfactory.getLeader($scope.courseId).then(function(res){
+       
+        console.log(res,"res");
+        $scope.coursele=res.data[0];
 
+    }).catch(function(e){
+        $mmUtil.showErrorModalDefault(e, 'mm.course.couldnotloadsections', true);
+    })
     function loadSections(refresh) {
         var promise;
 
@@ -83,6 +90,25 @@ angular.module('mm.core.course')
                     return buttonInfo;
                 });
             });
+
+            $ionicModal.fromTemplateUrl('LeaderBoard.html', {
+                scope: $scope,
+                animation: 'slide-in-up'
+             }).then(function(modal) {
+                $scope.modalLeader = modal;
+             });
+
+            $scope.OpenLeaderBoard=function (){
+                $scope.modalLeader.show();
+               
+
+            }
+            $scope.CloseLeaderBoard=function (){
+                $scope.modalLeader.hide();
+               
+
+            }
+
 
             // Get the sections.
             return $mmCourse.getSections(courseId, false, true).then(function(sections) {
@@ -282,4 +308,19 @@ angular.module('mm.core.course')
     $scope.$on('$destroy', function() {
         statusObserver && statusObserver.off && statusObserver.off();
     });
-});
+}).factory("$Leaderfactory",function($http,$mmSite){
+    var siteinfo1 = $mmSite.getInfo();
+    return {
+        getLeader:getLeader
+    }
+    function getLeader(cid){
+        
+        return $http.get(siteinfo1.siteurl+"/webservice/rest/server.php?wstoken="+localStorage.getItem('token')+"&wsfunction=core_course_leaderboard&userid="+siteinfo1.userid+"&courseid="+cid+"&moodlewsrestformat=json").then(function (res){
+            return res;
+
+        }).catch(function(e){
+            return e;
+        })
+
+    }
+})

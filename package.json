@@ -18,8 +18,9 @@
     }
   ],
   "dependencies": {
-    "electron-windows-notifications": "^1.1.13",
-    "electron-builder-squirrel-windows": "^19.3.0"
+    "angular-pdfjs-viewer": "^2.0.1",
+    "electron-builder-squirrel-windows": "^19.3.0",
+    "electron-windows-notifications": "^1.1.13"
   },
   "devDependencies": {
     "appium": "^1.6.0",

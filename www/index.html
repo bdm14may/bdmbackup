@@ -7,6 +7,7 @@
     <meta http-equiv="Content-Security-Policy" content="default-src * filesystem: cdvfile: file: gap: https://ssl.gstatic.com; img-src * filesystem: gap: data: cdvfile: file: https://ssl.gstatic.com android-webview-video-poster: blob:; style-src 'self' 'unsafe-inline' filesystem: cdvfile: file:; script-src 'self' 'unsafe-inline' 'unsafe-eval' http://localhost:* filesystem: cdvfile: file:; media-src * filesystem: cdvfile: file: gap: blob:">
     <title>Moodle Desktop</title> <!-- Title is used in desktop, but should be ignored in mobile apps. -->
     <link href="build/mm.bundle.css" rel="stylesheet">
+    <link rel="stylesheet" href="lib/pdf.js-viewer/viewer.css">
     <script src="lib/ionic/release/js/ionic.bundle.js"></script>
     <script src="cordova.js"></script>
     <script src="lib/angular-translate/angular-translate.js"></script>
@@ -23,6 +24,10 @@
     <script src="lib/angular-messages/angular-messages.js"></script>
     <script src="lib/chart.js/dist/Chart.js"></script>
     <script src="lib/angular-chart.js/dist/angular-chart.min.js"></script>
+    <script src="lib/pdf.js-viewer/pdf.js"></script>
+        
+
+    <script src="lib/angular-pdfjs-viewer/dist/angular-pdfjs-viewer.js"></script>
     <script src="build/mm.bundle.js"></script>
     <style></style> <!-- Empty style to make easier to test styles using Inspector. -->
   </head>

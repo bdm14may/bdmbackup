@@ -1,3 +1,6 @@
+<style>
+    .some-pdf-container { width: 100%; height: 100%; }
+</style>
 <ion-view>
     <ion-nav-title><mm-format-text watch="true">{{ title }}</mm-format-text></ion-nav-title>
     <ion-nav-buttons side="secondary" >
@@ -9,6 +12,7 @@
     <ion-content padding="true" mm-state-class>
         <span ng-if="moduleer.completionstatus.modname!='feedback'">
                 <span ng-if="moduleer.completionstatus.modname!='hvp'">  
+            <span ng-if="moduleer.completionstatus.modname!='certificate'">
         <mm-course-mod-description description="description"></mm-course-mod-description>
         <h2 ng-if="!isDisabledInSite && isSupportedByTheApp">{{ 'mm.core.whoops' | translate }}</h2>
         <h2 ng-if="isDisabledInSite || !isSupportedByTheApp">{{ 'mm.core.uhoh' | translate }}</h2>
@@ -18,6 +22,7 @@
          <p ng-if="isDisabledInSite || !isSupportedByTheApp"><strong>{{ 'mm.course.askadmintosupport' | translate }}</strong></p>
         </span>
         </span>
+    </span>
         <span ng-if="moduleer.completionstatus.modname=='feedback'">
             
             <span ng-if="!isCompleted">
@@ -45,6 +50,7 @@
 
 <span ng-if="moduleer.completionstatus.modname!='feedback'">
     <span ng-if="moduleer.completionstatus.modname!='hvp'">  
+    <span ng-if="moduleer.completionstatus.modname!='certificate'">
     <div ng-if="url">
             
             <p><strong>{{ 'mm.course.useactivityonbrowser' | translate }}</strong></p>
@@ -54,6 +60,7 @@
             <!-- <div ng-init="openb()"></div> -->
         </div>
     </span> 
+    </span>
     </span>
 
     <span ng-if="moduleer.completionstatus.modname=='hvp'">
@@ -66,5 +73,14 @@
             <div ng-init="openb()"></div>
         </div>
     </span>
+    <span ng-if="moduleer.completionstatus.modname=='certificate'">
+            <div>
+                  Created At :{{dateString}} 
+                  <a  ng-click="openb1()" mm-link class="button button-block icon-right" ng-if="!showpdf">View</a>
+                 
+            </div>
+        </span>
+
+    
     </ion-content>
 </ion-view>
